@@ -241,14 +241,27 @@ The project is also an exploration of the Rust ecosystem, asynchronous programmi
 
 ---
 
-## 🤝 Contributing
+## Versioning
 
-Contributions, suggestions, and ideas are welcome!
+This project follows Semantic Versioning.
 
-If you are interested in Rust, MCP, Artificial Intelligence, or High-Performance Computing, feel free to explore the project and contribute.
+Release versions are available on the [Releases page](https://github.com/ptarcode/rust_slurm_mcp/releases).
+
+## License
+
+Rust GPU SMI is proprietary software.
+
+Free usage is permitted under the terms of the
+[Proprietary Software License](LICENSE).
+
+Redistribution, modification, and resale are prohibited.
+
+## Feedback and Contributions
+
+Found a bug or have a suggestion?
+
+Please open an issue in the GitHub repository.
 
 ---
 
-## 📄 License
-
-See the repository for licensing information.
+**Developed with Rust.**
