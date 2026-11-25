@@ -144,16 +144,6 @@ For production environments, use an appropriately restricted Slurm account and f
 
 ---
 
-## 📋 Requirements
-
-- Rust toolchain
-- Cargo
-- Running Slurm cluster
-- Slurm REST API (`slurmrestd`) enabled and accessible
-- Valid Slurm REST API authentication credentials
-
----
-
 ## 📦 Installation
 
 Rust Slurm MCP is distributed as a precompiled executable binary.
@@ -185,15 +175,30 @@ chmod +x slurm-mcp
 
 The MCP server requires access to a running Slurm REST API (`slurmrestd`).
 
-Configuration is provided through environment variables.
+Configuration is managed through a `.env` file located in the same directory as the executable binary.
 
-Example:
+### Environment Configuration
+
+Create a `.env` file:
 
 ```bash
-export SLURM_API_URL="http://localhost:6820"
-export SLURM_USER="your_slurm_user"
-export SLURM_TOKEN="your_slurm_token"
+touch .env
 ```
+
+Add the following configuration:
+
+```env
+SLURM_API_URL=http://localhost:6820
+SLURM_USER=your_slurm_user
+SLURM_TOKEN=your_slurm_token
+```
+
+Replace the example values with your Slurm REST API endpoint and authentication credentials.
+
+**Important:**
+- Keep the `.env` file in the same directory as the executable.
+- Do not commit your `.env` file to version control.
+- Protect your authentication token and restrict access to the configuration file.
 
 *Adjust the configuration variables according to the actual environment variables supported by the application.*
 
