@@ -178,7 +178,7 @@ https://github.com/ptarcode/slurm_mcp/releases
 Extract the downloaded archive and make the binary executable:
 
 ```bash
-chmod +x rust_slurm_mcp
+chmod +x slurm-mcp
 ```
 
 ## ⚙️ Configuration
@@ -202,7 +202,7 @@ export SLURM_TOKEN="your_slurm_token"
 Start the MCP server:
 
 ```bash
-./rust_slurm_mcp
+./slurm-mcp
 ```
 
 The server communicates with compatible MCP clients using its configured transport.
