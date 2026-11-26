@@ -246,6 +246,115 @@ Once configured, DeepSeek can discover the tools exposed by Rust Slurm MCP and u
 
 The server communicates with compatible MCP clients using its configured transport.
 
+## 🤖 Claude Desktop Integration
+
+Rust Slurm MCP can be integrated with [Claude Desktop](https://claude.com/download) using the Model Context Protocol (MCP) and the `stdio` transport.
+
+This integration allows Claude to communicate directly with your Slurm cluster through the tools exposed by Rust Slurm MCP.
+
+### 1. Locate the MCP Configuration File
+
+Claude Desktop uses a JSON configuration file to register local MCP servers.
+
+Configuration file locations:
+
+| Operating System | Configuration Path |
+|---|---|
+| Linux | `~/.config/Claude/claude_desktop_config.json` |
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+
+### 2. Configure the MCP Server
+
+Open `claude_desktop_config.json` and add the following configuration:
+
+```json
+{
+  "mcpServers": {
+    "slurm": {
+      "command": "/path/to/slurm-mcp",
+      "args": [],
+      "env": {
+        "SLURM_API_URL": "http://localhost:6820",
+        "SLURM_USER": "your_slurm_user",
+        "SLURM_TOKEN": "your_slurm_token"
+      }
+    }
+  }
+}
+```
+
+Replace `/path/to/slurm-mcp` with the absolute path to your compiled executable.
+
+**Example:**
+
+```json
+{
+  "mcpServers": {
+    "slurm": {
+      "command": "/home/ubuntu/software/slurm-mcp",
+      "args": [],
+      "env": {
+        "SLURM_API_URL": "http://localhost:6820",
+        "SLURM_USER": "your_slurm_user",
+        "SLURM_TOKEN": "your_slurm_token"
+      }
+    }
+  }
+}
+```
+
+### 3. Set Executable Permissions
+
+Make sure the executable has permission to run:
+
+```bash
+chmod +x /path/to/slurm-mcp
+```
+
+### 4. Restart Claude Desktop
+
+After saving the configuration:
+
+1. Completely close Claude Desktop.
+2. Open Claude Desktop again.
+3. Navigate to the available MCP tools.
+4. Verify that the `slurm` server is connected.
+
+### 5. Test the Integration
+
+Once connected, Claude can discover and use the tools provided by Rust Slurm MCP.
+
+Try asking Claude:
+
+**Job Monitoring**
+
+> Show me all running jobs in the cluster.
+
+> How many jobs are currently pending?
+
+**Node Monitoring**
+
+> Show me the status of all compute nodes.
+
+**Partition Information**
+
+> List all available Slurm partitions.
+
+**Cluster Resources**
+
+> Give me an overview of the cluster resources.
+
+### Important Notes
+
+- Rust and Cargo are not required to run the compiled executable.
+- The MCP server must be able to communicate with the Slurm REST API (`slurmrestd`).
+- Ensure the configured environment variables match those supported by the application.
+- Keep authentication credentials secure and never commit them to version control.
+- The executable must be accessible by the Claude Desktop process.
+
+For more information, visit the [Model Context Protocol documentation](https://modelcontextprotocol.io/docs/develop/connect-local-servers).
+
 ## 📋 Requirements
 
 - Linux operating system (depending on the released binary).
