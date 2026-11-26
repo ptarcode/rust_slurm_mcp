@@ -202,13 +202,47 @@ Replace the example values with your Slurm REST API endpoint and authentication 
 
 *Adjust the configuration variables according to the actual environment variables supported by the application.*
 
-## ▶️ Running
+## 🤖 DeepSeek Integration
 
-Start the MCP server:
+Rust Slurm MCP can be integrated with DeepSeek-compatible MCP clients using the `stdio` transport.
 
-```bash
-./slurm-mcp
+The following example demonstrates how to configure the Rust Slurm MCP server using the DeepSeek MCP client (`@deepseek-ai/dsh-mcp-client`).
+
+### MCP Client Configuration
+
+Add the following configuration to your MCP client:
+
+```yaml
+- id: mcp-slurm
+  name: '@deepseek-ai/dsh-mcp-client'
+  config:
+    serverName: slurm
+    transport: stdio
+    command: /home/ubuntu/software/slurm-mcp
+    env: {}
+    toolCallTimeoutMs: 60000
 ```
+
+**Configuration parameters:**
+
+| Parameter | Description |
+|---|---|
+| `id` | Unique identifier for the MCP integration. |
+| `name` | DeepSeek MCP client package. |
+| `serverName` | Name assigned to the Slurm MCP server. |
+| `transport` | Communication protocol (`stdio`). |
+| `command` | Absolute path to the compiled Rust Slurm MCP executable. |
+| `env` | Environment variables required by the MCP server. |
+| `toolCallTimeoutMs` | Maximum execution time for MCP tool calls (60 seconds). |
+
+**Important:**
+
+- Replace the `command` path with the actual location of your compiled executable.
+- Ensure the executable has execution permissions.
+- Configure the required Slurm API environment variables according to your installation.
+- The MCP client must be able to execute the server process.
+
+Once configured, DeepSeek can discover the tools exposed by Rust Slurm MCP and use them to retrieve information from the Slurm cluster.
 
 The server communicates with compatible MCP clients using its configured transport.
 
